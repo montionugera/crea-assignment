@@ -24,7 +24,7 @@ def test_load_csv_should_success() -> None:
                     Route(origin='E', destination='F', minutes_spend=5),
                     Route(origin='F', destination='G', minutes_spend=5),
                     Route(origin='G', destination='H', minutes_spend=10),
-                    Route(origin='H', destination='I', minutes_spend=10),
+                    Route(origin='H', destination='I', minutes_spend=3),
                     Route(origin='I', destination='J', minutes_spend=5),
                     Route(origin='G', destination='J', minutes_spend=20)]
 
@@ -32,9 +32,12 @@ def test_load_csv_should_success() -> None:
 @pytest.mark.parametrize(
     "origin,destination,expected_routes", [
         ('A', 'B', [Route(origin='A', destination='B', minutes_spend=5)]),
+        ('A', 'D', [Route(origin='A', destination='D', minutes_spend=15)]),
         ('G', 'I', [Route(origin='G', destination='H', minutes_spend=10),
-                    Route(origin='H', destination='I', minutes_spend=10), ]),
-        ('G', 'J', [Route(origin='G', destination='J', minutes_spend=20)])
+                    Route(origin='H', destination='I', minutes_spend=3), ]),
+        ('G', 'J', [Route(origin='G', destination='H', minutes_spend=10),
+                    Route(origin='H', destination='I', minutes_spend=3),
+                    Route(origin='I', destination='J', minutes_spend=5), ])
     ]
 )
 def test_find_trip_should_success(origin: str, destination: str, expected_routes: List[Route]) -> None:
